@@ -98,8 +98,14 @@ dataSource:
 environments:
     development:
         dataSource:
-            dbCreate: create-drop
-            url: jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            dbCreate: update
+            # pooled: true
+            # jmxExport: true
+            driverClassName: 'org.postgresql.Driver'
+            # dialect: 'org.hibernate.dialect.PostgreSQLDialect'
+            username: 'zeta'
+            password: 'zeta2017'
+            url: "jdbc:postgresql://localhost:5432/prueba"
     test:
         dataSource:
             dbCreate: update
