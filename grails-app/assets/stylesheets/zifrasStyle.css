@@ -1,0 +1,13 @@
+.form-control .error {
+	border: 2px solid #FC6180!important;
+}
+
+.modal {
+	z-index: 5000;
+}
+
+@media print{
+	.navbar .header-navbar .pcoded-header .iscollapsed{
+		display:none;
+	}	
+}

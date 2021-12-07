@@ -1,11 +1,54 @@
-// This is a manifest file that'll be compiled into application.js.
 //
-// Any JavaScript file within this directory can be referenced here using a relative path.
-//
-// You're free to add application-wide JavaScript to this file, but it's generally better
-// to create separate JavaScript files as needed.
-//
-//= require jquery-3.3.1.min
-//= require bootstrap
-//= require popper.min
-//= require_self
+//= require jquery/js/jquery.min
+//= require jquery-ui/js/jquery-ui.min
+//= require popper.js/js/popper.min
+//= require bootstrap/js/bootstrap.min
+//= require jquery-slimscroll/js/jquery.slimscroll
+//= require modernizr/js/modernizr
+//= require modernizr/js/css-scrollbars
+//= require bootstrap-growl.min
+//= require sweetalert/js/sweetalert.min
+//= require modalEffects
+//= require classie
+//= require pages/form-validation/validate
+//= require pages/form-masking/inputmask
+//= require pages/form-masking/jquery.inputmask
+//= require pages/form-masking/autoNumeric
+//= require pages/form-masking/form-mask
+//= require pages/jquery.filer/js/jquery.filer.min
+//= require i18next/js/i18next.min
+//= require i18next-xhr-backend/js/i18nextXHRBackend.min
+//= require i18next-browser-languagedetector/js/i18nextBrowserLanguageDetector.min
+//= require jquery-i18next/js/jquery-i18next.min
+//= require SmoothScroll
+//= require select2/js/select2.full.min
+//= require pages/edit-table/jquery.tabledit
+//= require datatables.net/js/jquery.dataTables.min
+//= require datatables.net-buttons/js/dataTables.buttons.min
+//= require pages/data-table/js/jszip.min
+//= require pages/data-table/js/pdfmake.min
+//= require pages/data-table/js/vfs_fonts
+//= require pages/data-table/extensions/select/js/dataTables.select.min
+//= require datatables.net-buttons/js/buttons.print.min
+//= require datatables.net-buttons/js/buttons.html5.min.js
+//= require datatables.net-bs4/js/dataTables.bootstrap4.min
+//= require datatables.net-responsive/js/dataTables.responsive.min
+//= require datatables.net-responsive-bs4/js/responsive.bootstrap4.min
+//= require pages/advance-elements/moment-with-locales.min
+//= require bootstrap-datepicker/js/bootstrap-datepicker.min
+//= require pages/advance-elements/bootstrap-datetimepicker.min
+//= require bootstrap-daterangepicker/js/daterangepicker
+//= require datedropper/js/datedropper.min
+//= require spectrum/js/spectrum
+//= require jscolor/js/jscolor
+//= require jquery-minicolors/js/jquery.minicolors.min
+//= require jquery.cookie/js/jquery.cookie
+//= require jquery.steps/js/jquery.steps
+//= require jquery-validation/js/jquery.validate
+//= require pages/data-table/js/data-table-custom
+//= require pcoded.min
+//= require demo-12
+//= require jquery.mCustomScrollbar.concat.min
+//= require script
+//= require date-eu/js/date-eu
+//= require zifras

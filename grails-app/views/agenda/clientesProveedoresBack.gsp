@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="layout" content="main">	
+</head>
+<body>	
+<div style="display: none;">
+	<div id="urlGetClientes">
+		<g:createLink controller="agenda" action="ajaxGetClientesOProveedoresList" />
+	</div>
+	<div id="urlEditBackoffice">
+		<g:createLink controller="agenda" action="editBackoffice" />
+	</div>
+</div>
+
+<div class="main-body">
+	
+	<div class="page-wrapper">		
+		<div class="col-md-12 col-xl-12 ">
+			<div class="card">
+				<div class="card-block">
+					<div class="dt-responsive table-responsive">
+						<div id="preloader" class="preloader3" style="display:none;">
+							<div class="circ1 loader-primary"></div>
+							<div class="circ2 loader-primary"></div>
+							<div class="circ3 loader-primary"></div>
+							<div class="circ4 loader-primary"></div>
+						</div>
+						<div id="headerClientes">							
+							<h4 style="float:left;margin-bottom:20px;"><g:message code="zifras.cuenta.ClienteProveedor.label" default="Clientes"/></h4>
+							<div style="font-size: 20px;"><i class="botonFlecha ti-arrow-circle-down" style="float:right;padding-top:5px;margin-right:10px;"></i></div>
+						</div>
+						<div id="divTablaClientesid" style="display:none;">
+							<table id="listClientes" class="table table-striped table-bordered nowrap" style="cursor:pointer;">
+								<thead>
+									<tr>
+										<th>Razon Social</th>
+										<th>CUIT</th>
+										<th>Domicilio</th>
+										<th>Email</th>
+										<th>Alias</th>
+										<th>Nota</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-12 col-xl-12 ">
+			<div class="card">
+				<div class="card-block">
+					<div class="dt-responsive table-responsive">
+						<div id="preloader2" class="preloader3" style="display:none;">
+							<div class="circ1 loader-primary"></div>
+							<div class="circ2 loader-primary"></div>
+							<div class="circ3 loader-primary"></div>
+							<div class="circ4 loader-primary"></div>
+						</div>
+						<div id="headerProveedores">							
+							<h4 style="float:left;margin-bottom:20px;"><g:message code="zifras.liquidacion.cuenta.ClienteProveedorlabel" default="Proveedores"/></h4>
+							<div style="font-size: 20px;"><i class="botonFlechaProv ti-arrow-circle-down" style="float:right;padding-top:5px;margin-right:10px;"></i></div>
+						</div>
+						<div id="divTablaProveedoresid" style="display:none;">
+							<table id="listProveedores" class="table table-striped table-bordered nowrap" style="cursor:pointer;">
+								<thead>
+									<tr>
+										<th>Razon Social</th>
+										<th>CUIT</th>
+										<th>Domicilio</th>
+										<th>Email</th>
+										<th>Alias</th>
+										<th>Nota</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-10">
+				<g:link action="createBackoffice" class="btn btn-success" id="${cuentaId}"><g:message code="default.add.label" default="Agregar {0}" args="['Cliente/Proveedor']"/></g:link>
+				<g:link class="btn btn-inverse m-b-0" action="list"><g:message code="default.button.back.label" default="Volver" /></g:link>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+var tablaClientes;
+var tablaProveedores
+
+jQuery(document).ready(function() {
+
+    tablaClientes = $('#listClientes').DataTable({
+		"ordering": true,
+		"searching": true,
+		oLanguage: {
+			sProcessing: "${message(code: 'default.datatable.processing', default: 'Buscando...')}",
+			sSearch: "${message(code: 'default.datatable.search', default: 'Buscar')}",
+			sLengthMenu: "${message(code: 'default.datatable.lengthMenu', default: 'Mostrar _MENU_ registros')}",
+			sZeroRecords: "${message(code: 'zifras.cuenta.Cuenta.list.agregar', default: 'No hay clientes')}</a>",
+			sInfo: "${message(code: 'default.datatable.info', default: 'Mostrando desde _START_ hasta _END_ de _TOTAL_ registros')}",
+			sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de _MAX_ registros en total)')}",
+			sInfoPostFix: "",
+			sUrl: "",
+			sInfoEmpty: "${message(code: 'default.datatable.infoEmpty', default: '0 de 0')}",
+			oPaginate: {
+				"sFirst":	"${message(code: 'default.datatable.paginate.first', default: 'Primero')}",
+				"sPrevious":"${message(code: 'default.datatable.paginate.previous', default: 'Anterior')}",
+				"sNext":	"${message(code: 'default.datatable.paginate.next', default: 'Siguiente')}",
+				"sLast":	"${message(code: 'default.datatable.paginate.last', default: '&Uacute;ltimo')}"
+			}
+		},
+		iDisplayLength: 100,
+		aaSorting: [
+			[0, 'asc']
+		],
+		aoColumnDefs: [{
+						"aTargets": [0],
+			   			"mData": "razonSocial",
+			   			'sClass': 'bold'
+					},{
+		       			"aTargets": [1],
+		       			"mData": "cuit",
+		       			'sClass': 'text-right'
+		       		},{
+		       			"aTargets": [2],
+		       			"mData": "domicilio",
+		       			"sClass" : "text-right"
+		       		},{
+		       			"aTargets": [3],
+		       			"mData": "email",
+		       			"sClass" : "text-right"
+		       		},{
+		       			"aTargets": [4],
+		       			"mData": "alias",
+		       			"sClass" : "text-right"
+		       		},{
+		       			"aTargets": [5],
+		       			"mData": "nota",
+		       			"sClass" : "text-right"
+					}],
+    	select: {
+             style: 'os',
+             selector: 'td:first-child',
+             style: 'multi'
+        },
+		buttons: [{
+  	  				extend: 'excelHtml5',
+ 					title: function () {
+ 							var nombre = "Clientes Cuenta" + " ${cuentaId}";
+ 							return nombre;
+ 					}
+ 				},{
+   	            	extend: 'pdfHtml5',
+   	            	orientation: 'landscape',
+   	            	title: function () {
+   	            		var nombre = "Clientes Cuenta" + " ${cuentaId}";
+							return nombre;
+ 					}
+ 				},{
+ 					extend: 'copyHtml5'
+ 				}],
+       		sPaginationType: 'simple',
+       		sDom: "Bflrtip",
+		fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+				// Row click
+				$(nRow).on('click', function() {
+					window.location.href = $('#urlEditBackoffice').text() + '?id=' + aData['id'] + '&tipo=clientes' + '&cuentaId=${cuentaId}';
+				});
+			}
+		
+	});
+	llenarDatoslistClientes();
+
+	tablaProveedores = $('#listProveedores').DataTable({
+		"ordering": true,
+		"searching": true,
+		oLanguage: {
+			sProcessing: "${message(code: 'default.datatable.processing', default: 'Buscando...')}",
+			sSearch: "${message(code: 'default.datatable.search', default: 'Buscar')}",
+			sLengthMenu: "${message(code: 'default.datatable.lengthMenu', default: 'Mostrar _MENU_ registros')}",
+			sZeroRecords: "${message(code: 'zifras.cuenta.Cuenta.list.agregar', default: 'No hay proveedores')}</a>",
+			sInfo: "${message(code: 'default.datatable.info', default: 'Mostrando desde _START_ hasta _END_ de _TOTAL_ registros')}",
+			sInfoFiltered: "${message(code: 'default.datatable.infoFiltered', default: '(filtrado de _MAX_ registros en total)')}",
+			sInfoPostFix: "",
+			sUrl: "",
+			sInfoEmpty: "${message(code: 'default.datatable.infoEmpty', default: '0 de 0')}",
+			oPaginate: {
+				"sFirst":	"${message(code: 'default.datatable.paginate.first', default: 'Primero')}",
+				"sPrevious":"${message(code: 'default.datatable.paginate.previous', default: 'Anterior')}",
+				"sNext":	"${message(code: 'default.datatable.paginate.next', default: 'Siguiente')}",
+				"sLast":	"${message(code: 'default.datatable.paginate.last', default: '&Uacute;ltimo')}"
+			}
+		},
+		iDisplayLength: 100,
+		aaSorting: [
+			[0, 'asc']
+		],
+		aoColumnDefs: [{
+						"aTargets": [0],
+			   			"mData": "razonSocial",
+			   			'sClass': 'bold'
+					},{
+		       			"aTargets": [1],
+		       			"mData": "cuit",
+		       			'sClass': 'text-right'
+		       		},{
+		       			"aTargets": [2],
+		       			"mData": "domicilio",
+		       			"sClass" : "text-right"
+		       		},{
+		       			"aTargets": [3],
+		       			"mData": "email",
+		       			"sClass" : "text-right"
+		       		},{
+		       			"aTargets": [4],
+		       			"mData": "alias",
+		       			"sClass" : "text-right"
+		       		},{
+		       			"aTargets": [5],
+		       			"mData": "nota",
+		       			"sClass" : "text-right"
+					}],
+    	select: {
+             style: 'os',
+             selector: 'td:first-child',
+             style: 'multi'
+        },
+		buttons: [{
+  	  				extend: 'excelHtml5',
+ 					title: function () {
+ 							var nombre = "Proveedores Cuenta" + " ${cuentaId}";
+ 							return nombre;
+ 					}
+ 				},{
+   	            	extend: 'pdfHtml5',
+   	            	orientation: 'landscape',
+   	            	title: function () {
+   	            		var nombre = "Proveedores Cuenta" + " ${cuentaId}";
+							return nombre;
+ 					}
+ 				},{
+ 					extend: 'copyHtml5'
+ 				}],
+       		sPaginationType: 'simple',
+       		sDom: "Bflrtip",
+   		fnRowCallback: function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+				// Row click
+				$(nRow).on('click', function() {
+					window.location.href = $('#urlEditBackoffice').text() + '?id=' + aData['id'] + '&tipo=proveedores' + '&cuentaId=${cuentaId}';
+				});
+			}
+		
+	});
+	llenarDatoslistProveedores();
+
+	});
+
+	function llenarDatoslistClientes(){	
+		tablaClientes.clear().draw();
+		$("#preloader").show();
+		$.ajax($('#urlGetClientes').text(), {
+			dataType: "json",
+			data: {
+				cuentaId: "${cuentaId}",
+				tipo: "cliente"
+			}
+		}).done(function(data) {
+			$("#preloader").hide();
+			for(key in data){
+				tablaClientes.row.add(data[key]).draw();
+			}
+			tablaClientes.draw();
+		});
+		}
+
+	function llenarDatoslistProveedores(){	
+	tablaProveedores.clear().draw();
+	$("#preloader").show();
+	$.ajax($('#urlGetClientes').text(), {
+		dataType: "json",
+		data: {
+			cuentaId: "${cuentaId}",
+			tipo: "proveedor"
+		}
+	}).done(function(data) {
+		$("#preloader").hide();
+		for(key in data){
+			tablaProveedores.row.add(data[key]).draw();
+		}
+		tablaProveedores.draw();
+	});
+	}
+
+	$("#headerClientes").click(function() { 
+        if($("#divTablaClientesid").css('display') == 'none'){
+        	$("#divTablaClientesid").css('display', "");
+        	$(".botonFlecha").attr('class', 'botonFlecha ti-arrow-circle-up');        
+        }
+    	else{
+    		$("#divTablaClientesid").css('display', 'none');
+    		$(".botonFlecha").attr('class', 'botonFlecha ti-arrow-circle-down');
+    	}
+    });
+
+    $("#headerProveedores").click(function() { 
+        if($("#divTablaProveedoresid").css('display') == 'none'){
+        	$("#divTablaProveedoresid").css('display', ""); 
+        	$(".botonFlechaProv").attr('class', 'botonFlechaProv ti-arrow-circle-up');        
+        }
+    	else{
+    		$("#divTablaProveedoresid").css('display', 'none');
+        	$(".botonFlechaProv").attr('class', 'botonFlechaProv ti-arrow-circle-down');        
+    	}
+    });
+</script>
+</body>
+</html>

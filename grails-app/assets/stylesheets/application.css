@@ -7,9 +7,39 @@
 * You're free to add application-wide styles to this file and they'll appear at the top of the
 * compiled file, but it's generally better to create a new file per style scope.
 *
-*= require bootstrap
-*= require grails
-*= require main
-*= require mobile
-*= require_self
+*= require bootstrap/css/bootstrap.min
+*= require sweetalert/css/sweetalert
+*= require pages/jquery.filer/css/jquery.filer
+*= require pages/jquery.filer/fonts/jquery.filer-icons/jquery-filer
+*= require pages/jquery.filer/css/themes/jquery.filer-dragdropbox-theme
+*= require icon/themify-icons/themify-icons
+*= require icon/simple-line-icons/css/simple-line-icons
+*= require icon/icofont/css/icofont
+*= require c3/css/c3
+*= require pages/widget/calender/pignose.calendar.min
+*= require pages/flag-icon/flag-icon.min
+*= require pages/menu-search/css/component
+*= require pages/notification/notification
+*= require animate.css/css/animate
+*= require pnotify/css/pnotify
+*= require pnotify/css/pnotify.brighttheme
+*= require pnotify/css/pnotify.buttons
+*= require pnotify/css/pnotify.history
+*= require pnotify/css/pnotify.mobile
+*= require pages/pnotify/notify
+*= require component
+*= require datatables.net-bs4/css/dataTables.bootstrap4.min
+*= require pages/data-table/css/buttons.dataTables.min
+*= require datatables.net-responsive-bs4/css/responsive.bootstrap4.min
+*= require pages/data-table/extensions/select/css/select.dataTables.min
+*= require select2/css/select2.min
+*= require pages/menu-search/css/component
+*= require pages/advance-elements/css/bootstrap-datetimepicker
+*= require bootstrap-daterangepicker/css/daterangepicker
+*= require datedropper/css/datedropper.min
+*= require spectrum/css/spectrum
+*= require jquery.mCustomScrollbar
+*= require jquery.steps/css/jquery.steps
+*= require style
+*= require zifrasStyle
 */

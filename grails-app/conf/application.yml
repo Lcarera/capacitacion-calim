@@ -2,12 +2,39 @@
 grails:
     profile: web
     codegen:
-        defaultPackage: prueba
+        defaultPackage: zifras
     gorm:
+        autowire: true
+        multiTenancy:
+            mode: DISCRIMINATOR
+            tenantResolverClass: com.zifras.CurrentUserTenantResolver
         reactor:
             # Whether to translate GORM events into Reactor events
             # Disabled by default for performance reasons
             events: false
+        default.mapping: {
+            id generator: 'org.hibernate.id.enhanced.SequenceStyleGenerator', params: [prefer_sequence_per_entity: true]
+        }
+    plugin:
+        springsecurity:
+          ui:
+            encodePassword: false
+            password:
+              minLength: 8
+              maxLength: 64
+              validationRegex: '^.*(?=.*\\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&]).*$'
+            register:
+              defaultRoleNames: ['ROLE_USER']
+              emailFrom: '"Calim" <notificaciones@calim.com.ar>'
+            forgotPassword.emailFrom: '"Calim" <notificaciones@calim.com.ar>'
+          successHandler:
+            defaultTargetUrl: "/start/index"
+            alwaysUseDefault: false
+            targetUrlParameter: 'spring-security-redirect'
+            ajaxSuccessUrl: '/login/ajaxSuccess'
+            successHandler.useReferer: false
+    cors:
+        enabled: true
 info:
     app:
         name: '@info.app.name@'
@@ -65,6 +92,9 @@ grails:
             maxsize: 1000
     controllers:
         defaultScope: singleton
+        upload:
+            maxFileSize: 52428800
+            maxRequestSize: 52428800
     converters:
         encoding: UTF-8
     views:
@@ -88,38 +118,73 @@ hibernate:
         queries: false
         use_second_level_cache: false
         use_query_cache: false
+    dialect: net.kaleidos.hibernate.PostgresqlExtensionsDialect
 dataSource:
     pooled: true
     jmxExport: true
-    driverClassName: org.h2.Driver
-    username: sa
-    password: ''
+    #driverClassName: org.h2.Driver
+    #username: sa
+    #password: ''
+    driverClassName: org.postgresql.Driver
+    username: zeta
+    password: zeta2017
+    url: "jdbc:postgresql://localhost:5432/zifras"
 
 environments:
     development:
+        versionActualApp: 0.9
+        marketLinkAndroid: "https://play.google.com/store/apps/details?id=com.calim.micontador"
+        marketLinkIos: " "
+        tokenFCM: "AAAA2CE3oWA:APA91bF-vnOWunUWlu-Cu9vDjtSYGPnzp3nGSuCdDVITV1F48yDuYEt3W7Hqrur_d_6nLavjhCi4Gdqr9ynCOYVe74ADTY-qmQ7X6-VHB721Xkhgzhxu6qdFhlAA42zfwVi7S0NAq1lp"
+        carpetaArchivos: "archivosCalimDesarrollo"
+        certificadoAfip: "workspace/zifras/src/main/resources/certificado2021.pfx"
+        credencialesGoogle: "credentialsGoogle/credentials.json"
+        serialNumberAfip: "CUIT 20282509009"
+        wsPadronA5Afip: "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA5?WSDL"
+        loginCmsAfip: 'https://wsaahomo.afip.gov.ar/ws/services/LoginCms'
         dataSource:
             dbCreate: update
-            # pooled: true
-            # jmxExport: true
-            driverClassName: 'org.postgresql.Driver'
-            # dialect: 'org.hibernate.dialect.PostgreSQLDialect'
-            username: 'francisco'
-            password: 'mishubishi2003'
-            url: "jdbc:postgresql://localhost:5432/prueba"
+            driverClassName: org.postgresql.Driver
+            username: zeta
+            password: zeta2017
+            url: "jdbc:postgresql://localhost:5432/zifras"
+        grails:
+            serverURL: "http://localhost:8080"
     test:
+        versionActualApp: 0.9
+        marketLinkAndroid: "https://play.google.com/store/apps/details?id=com.calim.micontador"
+        marketLinkIos: " "
+        tokenFCM: "AAAA2CE3oWA:APA91bF-vnOWunUWlu-Cu9vDjtSYGPnzp3nGSuCdDVITV1F48yDuYEt3W7Hqrur_d_6nLavjhCi4Gdqr9ynCOYVe74ADTY-qmQ7X6-VHB721Xkhgzhxu6qdFhlAA42zfwVi7S0NAq1lp"
+        carpetaArchivos: "archivosCalimDesarrollo"
+        certificadoAfip: "certificadoAfip/certificadoCalim.pfx"
+        credencialesGoogle: "credentialsGoogle/credentials.json"
+        serialNumberAfip: "CUIT 20282509009"
+        wsPadronA5Afip: "https://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA5?WSDL"
         dataSource:
             dbCreate: update
-            url: jdbc:h2:mem:testDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE
+            driverClassName: org.postgresql.Driver
+            username: zeta
+            password: zeta2017
+            url: "jdbc:postgresql://localhost:5432/zifras"
+        grails:
+            serverURL: "http://localhost:8080"
     production:
+        versionActualApp: 0.9
+        marketLinkAndroid: "https://play.google.com/store/apps/details?id=com.calim.micontador"
+        marketLinkIos: " "
+        tokenFCM: "AAAA2CE3oWA:APA91bF-vnOWunUWlu-Cu9vDjtSYGPnzp3nGSuCdDVITV1F48yDuYEt3W7Hqrur_d_6nLavjhCi4Gdqr9ynCOYVe74ADTY-qmQ7X6-VHB721Xkhgzhxu6qdFhlAA42zfwVi7S0NAq1lp"
+        carpetaArchivos: "calimUploads"
+        certificadoAfip: "certificadoAfip/certificado.pfx"
+        credencialesGoogle: "credentialsGoogle/credentials.json"
+        serialNumberAfip: "CUIT 30716783916"
+        wsPadronA5Afip: "https://aws.afip.gov.ar/sr-padron/webservices/personaServiceA5?WSDL"
+        loginCmsAfip: 'https://wsaa.afip.gov.ar/ws/services/LoginCms'
         dataSource:
             dbCreate: update
-            # pooled: true
-            # jmxExport: true
-            driverClassName: 'org.postgresql.Driver'
-            # dialect: 'org.hibernate.dialect.PostgreSQLDialect'
-            username: 'francisco'
-            password: 'mishubishi2003'
-            url: "jdbc:postgresql://localhost:5432/prueba"
+            driverClassName: org.postgresql.Driver
+            username: zeta
+            password: zeta2017
+            url: "jdbc:postgresql://localhost:5432/zifras"
             properties:
                 jmxEnabled: true
                 initialSize: 5
@@ -138,3 +203,5 @@ environments:
                 testOnReturn: false
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+        grails:
+            serverURL: "https://app.calim.com.ar"
